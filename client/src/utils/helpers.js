@@ -36,7 +36,6 @@ export function idbPromise(storeName, method, object) {
             // save a reference to that object store
             store = tx.objectStore(storeName);
 
-            // if there's any errors, let us know
             db.onerror = function(e) {
                 console.log('error', e);
             };
