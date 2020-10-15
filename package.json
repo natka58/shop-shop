@@ -25,5 +25,8 @@
   },
   "devDependencies": {
     "concurrently": "^5.1.0"
-  }
+  },
+  "engines": {
+    "node": "12.x"
+}
 }
