@@ -11,10 +11,17 @@
     "seed": "cd server && npm run seed",
     "heroku-postbuild": "cd client && npm run build"
   },
-  "author": "",
+  "author": "natka58",
   "license": "ISC",
   "dependencies": {
-    "if-env": "^1.0.4"
+    "@apollo/react-hooks": "^4.0.0",
+    "apollo-boost": "^0.4.9",
+    "graphql": "^15.3.0",
+    "graphql-tag": "^2.11.0",
+    "if-env": "^1.0.4",
+    "react-redux": "^7.2.1",
+    "redux": "^4.0.5",
+    "stripe": "^8.112.0"
   },
   "devDependencies": {
     "concurrently": "^5.1.0"
