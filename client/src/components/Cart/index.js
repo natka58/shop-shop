@@ -10,7 +10,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { useLazyQuery } from "@apollo/react-hooks";
 import { useDispatch, useSelector } from 'react-redux';
 
-const stripePromise = loadStripe("pk_test_TYooMQauvdEDq54NiTphI7jx");
+const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -27,15 +27,7 @@ const Cart = () => {
     }
   }, [state.cart.length, dispatch]);
 */
-  useEffect(() => {
-    if (data) {
-      stripePromise.then((res) => {
-        res.redirectToCheckout({ sessionId: data.checkout.session });
-      });
-    }
-  }, [data]);
-
-  console.log(state);
+  
 
   useEffect(() => {
     async function getCart() {
@@ -48,6 +40,15 @@ const Cart = () => {
     }
   }, [state.cart.length, dispatch]);
 
+  useEffect(() => {
+    if (data) {
+      stripePromise.then((res) => {
+        res.redirectToCheckout({ sessionId: data.checkout.session });
+      });
+    }
+  }, [data]);
+
+  console.log(state);
   function toggleCart() {
     dispatch({ type: TOGGLE_CART });
   }
@@ -62,22 +63,24 @@ const Cart = () => {
 
   function submitCheckout() {
     const productIds = [];
-    getCheckout({
-      variables: { products: productIds },
-    });
+
     state.cart.forEach((item) => {
       for (let i = 0; i < item.purchaseQuantity; i++) {
         productIds.push(item._id);
       }
     });
+  
+  getCheckout({
+    variables: { products: productIds }
+  });
   }
 
   if (!state.cartOpen) {
     return (
       <div className="cart-closed" onClick={toggleCart}>
-        <span role="img" aria-label="trash">
-          🛒
-        </span>
+        <span
+          role="img"
+          aria-label="trash">🛒</span>
       </div>
     );
   }
@@ -96,20 +99,22 @@ const Cart = () => {
           <div className="flex-row space-between">
             <strong>Total: ${calculateTotal()}</strong>
             {Auth.loggedIn() ? (
-              <button onClick={submitCheckout}>Checkout</button>
+              <button onClick={submitCheckout}>
+                Checkout
+              </button>
             ) : (
-              <span>(log in to check out)</span>
-            )}
+                <span>(log in to check out)</span>
+              )}
           </div>
         </div>
       ) : (
-        <h3>
-          <span role="img" aria-label="shocked">
-            😱
+          <h3>
+            <span role="img" aria-label="shocked">
+              😱
           </span>
           You haven't added anything to your cart yet!
-        </h3>
-      )}
+          </h3>
+        )}
     </div>
   );
 };
